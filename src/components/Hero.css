@@ -1,0 +1,158 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8rem 1.5rem 4rem;
+}
+
+.hero__inner {
+  max-width: 860px;
+}
+
+.hero__eyebrow {
+  margin-bottom: 1.6rem;
+}
+
+.hero__title {
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  margin-bottom: 1.6rem;
+  max-width: 16ch;
+  overflow-wrap: break-word; /* wrap between words only; avoid overflow */
+  hyphens: none; /* never break mid-word */
+}
+
+.hero__sub {
+  color: var(--ink-dim);
+  font-size: clamp(1.02rem, 1.6vw, 1.22rem);
+  max-width: 62ch;
+  margin-bottom: 2.4rem;
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 2.2rem;
+}
+
+.hero__socials {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero__loc {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  margin-left: 0.5rem;
+}
+
+/* Scroll cue */
+.hero__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-dim);
+}
+
+.hero__scroll-dot {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid var(--glass-border);
+  border-radius: 12px;
+  position: relative;
+}
+
+.hero__scroll-dot::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: var(--cyan);
+  border-radius: 2px;
+  animation: scrollDot 1.8s var(--ease) infinite;
+}
+
+.hero__scroll-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@keyframes scrollDot {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 14px);
+  }
+}
+
+/* Staged hero load-in */
+.stagger {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroIn 0.85s var(--ease) forwards;
+  animation-delay: calc(var(--i) * 0.12s + 0.15s);
+}
+
+@keyframes heroIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hero__scroll-dot::before {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 7rem 1.2rem 4rem;
+    min-height: 92vh;
+  }
+  .hero__scroll {
+    display: none;
+  }
+}
+
+/* Very narrow screens: ease the headline so it never overflows or breaks badly */
+@media (max-width: 400px) {
+  .hero__title {
+    font-size: 2.05rem;
+    max-width: 100%;
+  }
+  .hero__eyebrow {
+    font-size: 0.62rem;
+  }
+}

@@ -1,0 +1,67 @@
+/* Balance the vertical rhythm: equal breathing room above the heading
+   and below the contact buttons before the footer begins. */
+#contact.section {
+  padding-top: 6rem;
+  padding-bottom: 6.5rem;
+}
+
+.contact__card {
+  padding: 3.5rem 3rem 3.75rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact__card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.22), transparent 65%);
+  pointer-events: none;
+}
+
+.contact__title {
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  margin: 0.8rem auto 1rem;
+  max-width: 18ch;
+  position: relative;
+}
+
+.contact__lead {
+  color: var(--ink-dim);
+  max-width: 52ch;
+  margin: 0 auto 2.2rem;
+  font-size: 1.05rem;
+  position: relative;
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.contact__socials {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .contact__card {
+    padding: 2.6rem 1.5rem;
+  }
+  .contact__actions .btn {
+    width: 100%;
+    justify-content: center;
+    word-break: break-all;
+  }
+}

@@ -1,0 +1,140 @@
+.timeline {
+  position: relative;
+  list-style: none; /* remove default <ol> numbering — the glowing dots are the markers */
+  padding-left: 2.5rem;
+}
+
+.timeline__item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline__item:last-child {
+  margin-bottom: 0;
+}
+
+/* Connector runs from THIS item's dot center down to the NEXT item's dot center.
+   Uses item-relative math (100% of item height + the 2rem gap) so it stays
+   correct if content height changes. */
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  left: calc(-2.5rem + 8px - 1px); /* center of the 16px dot, minus half the 2px line */
+  top: calc(1.9rem + 8px); /* start exactly at the dot's vertical center */
+  height: calc(100% + 2rem); /* reach the next dot's center */
+  width: 2px;
+  background: linear-gradient(180deg, var(--lavender), var(--cyan));
+  opacity: 0.5;
+}
+
+.timeline__item:last-child::before {
+  display: none;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 1.9rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--lavender);
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18), 0 0 16px rgba(167, 139, 250, 0.6);
+}
+
+.timeline__card {
+  padding: 1.8rem 1.9rem;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.timeline__card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(167, 139, 250, 0.4);
+}
+
+.timeline__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.timeline__role {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.timeline__org {
+  color: var(--lavender);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.timeline__meta {
+  color: var(--ink-dim);
+  font-size: 0.86rem;
+  margin-top: 0.15rem;
+}
+
+.timeline__period {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--cyan);
+  background: rgba(125, 211, 232, 0.1);
+  border: 1px solid rgba(125, 211, 232, 0.25);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.timeline__points li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--ink-dim);
+  font-size: 0.98rem;
+  margin-bottom: 0.8rem;
+}
+
+.timeline__points li:last-child {
+  margin-bottom: 0;
+}
+
+.timeline__points li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--cyan);
+}
+
+.timeline__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--lavender);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.08);
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  transition: gap 0.25s var(--ease), border-color 0.25s ease, background 0.25s ease;
+}
+
+.timeline__link:hover {
+  gap: 0.8rem;
+  border-color: var(--lavender);
+  background: rgba(167, 139, 250, 0.16);
+}
+
+@media (max-width: 640px) {
+  .timeline__period {
+    align-self: flex-start;
+  }
+}
