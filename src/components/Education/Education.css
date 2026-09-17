@@ -1,0 +1,167 @@
+/* ============================================================
+   Education — standalone section, extracted from About
+   Timeline visual: B.Tech (primary, cyan node) + school entries
+   ============================================================ */
+
+/* Local backdrop so the constellation canvas never crosses through
+   education copy — scoped panel, not a global background change. */
+.edu-timeline-wrap {
+  position: relative;
+  max-width: 920px;
+  padding: 2.4rem clamp(1.25rem, 3vw, 2.75rem);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(13, 10, 32, 0.55), rgba(13, 10, 32, 0.72));
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(6px);
+  isolation: isolate;
+}
+
+.edu-timeline {
+  position: relative;
+  list-style: none;
+}
+
+/* ── Timeline item ── */
+.edu-timeline__item {
+  position: relative;
+  display: flex;
+  gap: 1.6rem;
+  padding-bottom: 3.2rem;
+}
+
+.edu-timeline__item--primary {
+  padding-bottom: 3.6rem;
+}
+
+.edu-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+/* Vertical connector line */
+.edu-timeline__item::before {
+  content: '';
+  position: absolute;
+  left: 1.45rem;
+  top: 2.2rem;
+  bottom: -0.8rem;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(167, 139, 250, 0.35), rgba(125, 211, 232, 0.12));
+}
+
+.edu-timeline__item:last-child::before {
+  display: none;
+}
+
+/* Index label (01, 02, 03) */
+.edu-timeline__index {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+  width: 2.9rem;
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+}
+
+/* Timeline dot */
+.edu-timeline__node {
+  position: absolute;
+  left: 1.1rem;
+  top: 0.35rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--lavender);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.14), 0 0 12px rgba(167, 139, 250, 0.45);
+}
+
+.edu-timeline__node--primary {
+  width: 14px;
+  height: 14px;
+  left: 0.98rem;
+  background: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(125, 211, 232, 0.18), 0 0 18px rgba(125, 211, 232, 0.6);
+}
+
+/* Content area */
+.edu-timeline__content {
+  flex: 1;
+  min-width: 0;
+  max-width: 640px;
+}
+
+.edu-timeline__degree {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink-dim);
+  line-height: 1.4;
+}
+
+.edu-timeline__item--primary .edu-timeline__degree {
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.edu-timeline__school {
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  margin-top: 0.35rem;
+}
+
+.edu-timeline__item--primary .edu-timeline__school {
+  font-size: 0.92rem;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+.edu-timeline__board {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--lavender);
+  margin-top: 0.3rem;
+}
+
+.edu-timeline__dates {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cyan);
+  margin-top: 0.5rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .edu-timeline-wrap {
+    padding: 1.75rem 1.1rem;
+    border-radius: 18px;
+  }
+
+  .edu-timeline__item {
+    gap: 1rem;
+    padding-bottom: 2.4rem;
+  }
+
+  .edu-timeline__item--primary {
+    padding-bottom: 2.6rem;
+  }
+
+  .edu-timeline__index {
+    width: 1.6rem;
+  }
+
+  .edu-timeline__item::before {
+    left: 0.85rem;
+  }
+
+  .edu-timeline__node {
+    left: 0.55rem;
+  }
+
+  .edu-timeline__node--primary {
+    left: 0.43rem;
+  }
+
+  .edu-timeline__item--primary .edu-timeline__degree {
+    font-size: 1.08rem;
+  }
+}

@@ -1,0 +1,14 @@
+/* ResumeViewer renders as a simple external link button.
+   The fallback variant gets a subtle inline style. */
+.resume-fallback-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+}
+
+.resume-fallback-link:hover {
+  color: var(--cyan);
+}

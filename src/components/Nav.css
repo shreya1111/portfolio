@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 50;
   transition: background 0.35s ease, backdrop-filter 0.35s ease,
     border-color 0.35s ease, box-shadow 0.35s ease;
   border-bottom: 1px solid transparent;
@@ -23,9 +23,10 @@
   padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
+/* Brand */
 .nav__brand {
   display: inline-flex;
   align-items: center;
@@ -35,6 +36,7 @@
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav__mark {
@@ -42,10 +44,50 @@
   font-size: 1.1rem;
 }
 
+/* Desktop link list */
 .nav__links {
   display: flex;
-  gap: 1.6rem;
+  flex-wrap: nowrap;
+  gap: 1.1rem;
   margin-left: auto;
+  /* Prevent the list from overflowing — shrinks before brand does */
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Fine-tune at wide viewports */
+@media (min-width: 1101px) {
+  .nav__links {
+    gap: 1.35rem;
+  }
+}
+
+/* Medium: 1001–1100px — tighter gap, smaller text */
+@media (max-width: 1100px) and (min-width: 961px) {
+  .nav__links {
+    gap: 0.75rem;
+  }
+  .nav__links a {
+    font-size: 0.72rem;
+  }
+  /* Hide social icons to free up space */
+  .nav__socials {
+    display: none;
+  }
+}
+
+/* Compact: 961–860px — hide socials + even tighter text */
+@media (max-width: 960px) and (min-width: 861px) {
+  .nav__links {
+    gap: 0.55rem;
+  }
+  .nav__links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.01em;
+  }
+  .nav__socials {
+    display: none;
+  }
 }
 
 .nav__links a {
@@ -54,45 +96,62 @@
   letter-spacing: 0.03em;
   color: var(--ink-dim);
   position: relative;
+  display: inline-block;        /* ensure the element has a definite box height */
   padding: 0.3rem 0;
+  white-space: nowrap;
   transition: color 0.25s ease;
 }
 
+/* Underline rendered via ::after, anchored to the bottom of the link's
+   own padding box. Using transform: scaleX instead of width: 0 → 100%
+   means the element always occupies full width (no layout shift) and the
+   line is guaranteed to sit inside the same stacking context as the nav —
+   it cannot slip behind the constellation canvas. */
 .nav__links a::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -2px;
-  width: 0;
+  right: 0;
+  bottom: 2px;                  /* inside the padding area, just below the text */
   height: 1.5px;
   background: linear-gradient(90deg, var(--lavender), var(--cyan));
-  transition: width 0.3s var(--ease);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease);
+  border-radius: 1px;
 }
 
 .nav__links a:hover {
   color: var(--ink);
 }
-
 .nav__links a:hover::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
+.nav__links a.is-active {
+  color: var(--ink);
+}
+.nav__links a.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Social icon buttons */
 .nav__socials {
   display: flex;
   gap: 0.55rem;
+  flex-shrink: 0;
 }
 
 .nav__socials .icon-btn {
   width: 38px;
   height: 38px;
 }
-
 .nav__socials .icon-btn svg {
   width: 17px;
   height: 17px;
 }
 
-/* Burger */
+/* ── Hamburger ── */
 .nav__burger {
   display: none;
   flex-direction: column;
@@ -104,6 +163,7 @@
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 .nav__burger span {
@@ -126,12 +186,12 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile menu panel */
+/* ── Mobile menu panel ── */
 .nav__mobile {
   display: none;
   overflow: hidden;
   max-height: 0;
-  background: rgba(13, 10, 36, 0.9);
+  background: rgba(13, 10, 36, 0.96);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid var(--glass-border);
@@ -139,7 +199,9 @@
 }
 
 .nav__mobile.is-open {
-  max-height: 460px;
+  /* 9 links × ~54px + socials ~80px + padding ~60px ≈ 626px.
+     Use a generous cap so nothing gets cut off. */
+  max-height: 680px;
 }
 
 .nav__mobile ul {
@@ -148,7 +210,7 @@
 
 .nav__mobile li a {
   display: block;
-  padding: 0.9rem 0;
+  padding: 0.85rem 0;
   font-family: var(--font-mono);
   font-size: 1rem;
   color: var(--ink-dim);
@@ -166,6 +228,7 @@
   padding: 1.2rem 1.5rem 1.6rem;
 }
 
+/* Switch to hamburger at 860px */
 @media (max-width: 860px) {
   .nav__links,
   .nav__socials {
@@ -176,5 +239,15 @@
   }
   .nav__mobile {
     display: block;
+  }
+}
+
+/* Reduced motion: no slide animation on mobile menu */
+@media (prefers-reduced-motion: reduce) {
+  .nav__mobile {
+    transition: none;
+  }
+  .nav__burger span {
+    transition: none;
   }
 }

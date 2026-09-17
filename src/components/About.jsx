@@ -1,7 +1,16 @@
-import { EDUCATION, PROFILE } from '../data'
+import { PROFILE } from '../data'
 import { LocationIcon } from './Icons'
 import Reveal from './Reveal'
 import './About.css'
+
+const CURRENT_FOCUS = [
+  'Python',
+  'AI / ML',
+  'Data Science',
+  'Generative AI',
+  'Agentic AI',
+  'Open Source',
+]
 
 export default function About() {
   return (
@@ -9,7 +18,7 @@ export default function About() {
       <Reveal className="section-head">
         <p className="eyebrow">01 · About</p>
         <h2 id="about-title">
-          Engineering intelligence with intent
+          Building intelligent solutions at the intersection of AI, data, and software engineering.
         </h2>
       </Reveal>
 
@@ -18,34 +27,28 @@ export default function About() {
           <p>
             I'm a software engineer and AI/ML developer who enjoys turning fuzzy problems into
             reliable systems. My core toolkit spans Python, data structures and algorithms, OOP,
-            and REST API design, with a growing focus on Generative AI and retrieval-augmented
-            generation.
+            and REST API design, with a growing focus on Generative AI and
+            retrieval-augmented generation.
           </p>
           <p>
-            I build scalable backend applications and AI-enabled automation workflows, leaning on
-            modern SDLC and Agile practices to keep code maintainable and shippable. Right now I'm
-            looking for software engineering roles at AI-first, cloud-driven technology
-            organizations where I can keep learning and building at depth.
+            I build scalable backend applications and AI-enabled automation workflows through
+            hands-on learning, open-source contribution, and real-world problem solving. I was
+            selected as a Contributor for GirlScript Summer of Code (GSSoC) 2026 under the Open
+            Source and AI/Agents tracks, working alongside mentors and developers on
+            community-driven projects.
           </p>
           <p className="about__loc">
-            <LocationIcon width="18" height="18" /> {PROFILE.location}
+            <LocationIcon width="18" height="18" aria-hidden="true" /> {PROFILE.location}
           </p>
         </Reveal>
 
         <Reveal className="about__card glass" delay={0.1}>
-          <p className="eyebrow">Education</p>
-          <h3 className="about__degree">{EDUCATION.degree}</h3>
-          <p className="about__school">{EDUCATION.school}</p>
-          <div className="about__stats">
-            <div>
-              <span className="about__stat-label">Timeline</span>
-              <span className="about__stat-value">{EDUCATION.timeline}</span>
-            </div>
-            <div>
-              <span className="about__stat-label">CGPA</span>
-              <span className="about__stat-value">{EDUCATION.cgpa}</span>
-            </div>
-          </div>
+          <p className="eyebrow">Current Focus</p>
+          <ul className="about__focus" aria-label="Current focus areas">
+            {CURRENT_FOCUS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </Reveal>
       </div>
     </section>

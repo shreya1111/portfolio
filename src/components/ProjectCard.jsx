@@ -1,13 +1,16 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { PROFILE } from '../data'
 import { CodeIcon, ArrowIcon } from './Icons'
+import ProjectModal from './ProjectModal/ProjectModal'
 
 /**
  * Glass project card with a cursor-tracked radial glow and lift-on-hover.
- * "View Code" links to the project's own GitHub repository.
+ * "View Code" links to the project's own GitHub repository. "Explore
+ * Architecture" opens the case-study modal with the project's own data.
  */
 export default function ProjectCard({ project, index }) {
   const cardRef = useRef(null)
+  const [showModal, setShowModal] = useState(false)
   const repoUrl = project.url || PROFILE.github
 
   const handleMove = (e) => {
@@ -27,7 +30,7 @@ export default function ProjectCard({ project, index }) {
       <div className="project__glow" aria-hidden="true" />
       <div className="project__content">
         <div className="project__head">
-          <span className="project__index">{String(index + 1).padStart(2, '0')}</span>
+          <span className="project__index">{String(index).padStart(2, '0')}</span>
           <a
             className="icon-btn project__code-icon"
             href={repoUrl}
@@ -53,15 +56,22 @@ export default function ProjectCard({ project, index }) {
           ))}
         </ul>
 
-        <a
-          className="project__link"
-          href={repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View Code <ArrowIcon width="15" height="15" />
-        </a>
+        <div className="project__actions">
+          <button type="button" className="project__link project__link--btn" onClick={() => setShowModal(true)}>
+            Explore Architecture <ArrowIcon width="15" height="15" />
+          </button>
+          <a
+            className="project__link"
+            href={repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Code <ArrowIcon width="15" height="15" />
+          </a>
+        </div>
       </div>
+
+      {showModal && <ProjectModal project={project} onClose={() => setShowModal(false)} />}
     </article>
   )
 }

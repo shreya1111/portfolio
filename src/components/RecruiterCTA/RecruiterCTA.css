@@ -1,0 +1,52 @@
+/* Compact "Let's Talk" pill — replaces the old large panel that could
+   obstruct section content. Stacks in the bottom-right column above the
+   Ask Shreya AI toggle so the two floating utilities never overlap. */
+.recruiter-cta {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5.25rem;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: rgba(20, 15, 46, 0.85);
+  border: 1px solid var(--glass-border);
+  animation: recruiter-in 0.3s var(--ease);
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, gap 0.2s ease;
+}
+
+.recruiter-cta:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  gap: 0.7rem;
+  transform: translateY(-1px);
+}
+
+@keyframes recruiter-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recruiter-cta { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .recruiter-cta {
+    right: 1rem;
+    bottom: 4.75rem;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* Yield to any open project modal. */
+body.has-open-modal .recruiter-cta {
+  display: none;
+}

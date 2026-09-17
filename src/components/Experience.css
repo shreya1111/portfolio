@@ -42,6 +42,21 @@
   box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18), 0 0 16px rgba(167, 139, 250, 0.6);
 }
 
+.timeline__dot--current {
+  background: var(--cyan);
+  box-shadow: 0 0 0 4px rgba(125, 211, 232, 0.22), 0 0 18px rgba(125, 211, 232, 0.75);
+  animation: timeline-dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes timeline-dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline__dot--current { animation: none; }
+}
+
 .timeline__card {
   padding: 1.8rem 1.9rem;
   transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
@@ -50,6 +65,31 @@
 .timeline__card:hover {
   transform: translateY(-3px);
   border-color: rgba(167, 139, 250, 0.4);
+}
+
+.timeline__card--current {
+  border-color: rgba(125, 211, 232, 0.45);
+  box-shadow: 0 0 0 1px rgba(125, 211, 232, 0.15), 0 12px 40px rgba(125, 211, 232, 0.12);
+}
+
+.timeline__badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  margin-bottom: 0.55rem;
+}
+
+.timeline__badge--current {
+  color: #0d0a24;
+  background: linear-gradient(100deg, var(--cyan), var(--lavender));
+  border-color: transparent;
 }
 
 .timeline__top {
@@ -78,6 +118,9 @@
   color: var(--ink-dim);
   font-size: 0.86rem;
   margin-top: 0.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .timeline__period {
@@ -131,6 +174,41 @@
   gap: 0.8rem;
   border-color: var(--lavender);
   background: rgba(167, 139, 250, 0.16);
+}
+
+.timeline__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+  list-style: none;
+}
+
+.timeline__tech li {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  background: rgba(125, 211, 232, 0.08);
+  border: 1px solid rgba(125, 211, 232, 0.2);
+  padding: 0.32rem 0.65rem;
+  border-radius: 8px;
+}
+
+.exp-snapshot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: -0.5rem 0 2.2rem;
+}
+
+.exp-snapshot__chip {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--cyan);
+  background: rgba(125, 211, 232, 0.08);
+  border: 1px solid rgba(125, 211, 232, 0.22);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
 }
 
 @media (max-width: 640px) {

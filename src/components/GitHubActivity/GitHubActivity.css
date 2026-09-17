@@ -1,0 +1,607 @@
+/* Dim the constellation background specifically behind this section so
+   repository content stays the visual focus. */
+#github-activity {
+  position: relative;
+}
+
+#github-activity::before {
+  content: '';
+  position: absolute;
+  inset: -3rem 0;
+  z-index: -1;
+  background: rgba(13, 10, 36, 0.5);
+  pointer-events: none;
+}
+
+.gh-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 2.2rem 0 1rem;
+}
+
+.gh-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 2rem;
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+}
+
+.gh-empty {
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   Skeletons
+   ============================================================ */
+.gh-skeleton {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--glass) 25%, var(--glass-strong) 37%, var(--glass) 63%);
+  background-size: 400% 100%;
+  animation: gh-shimmer 1.6s ease infinite;
+}
+
+.gh-skeleton--profile {
+  height: 78px;
+  margin-bottom: 1.4rem;
+}
+
+.gh-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.gh-skeleton-grid .gh-skeleton {
+  height: 150px;
+}
+
+@keyframes gh-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-skeleton { animation: none; }
+}
+
+/* ============================================================
+   Profile header — flat surface
+   ============================================================ */
+.gh-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.25s ease;
+}
+
+.gh-profile:hover {
+  border-color: rgba(125, 211, 232, 0.3);
+}
+
+.gh-profile__avatar {
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.gh-profile__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.gh-profile__tagline {
+  font-family: var(--font-mono);
+  color: var(--ink-dim);
+  font-size: 0.76rem;
+  margin-top: 0.15rem;
+}
+
+.gh-profile__stats {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+.gh-profile__stat-primary {
+  font-size: 0.85rem;
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.gh-profile__stat-secondary {
+  font-size: 0.74rem;
+  color: var(--ink-dim);
+}
+
+.gh-profile__link {
+  font-size: 0.76rem;
+  padding: 0.5rem 0.95rem;
+}
+
+/* ============================================================
+   Featured Engineering — hero (strongest) + secondary (medium)
+   ============================================================ */
+.gh-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  color: inherit;
+  padding: 2rem 2.1rem;
+  background: linear-gradient(145deg, rgba(167, 139, 250, 0.08), rgba(125, 211, 232, 0.05)), var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md, 18px);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.gh-hero:hover {
+  transform: translateY(-3px);
+  border-color: rgba(167, 139, 250, 0.45);
+}
+
+.gh-hero__index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+}
+
+.gh-hero__name {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin-top: 0.4rem;
+  line-height: 1.15;
+}
+
+.gh-hero__subname {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--ink-dim);
+  margin-top: 0.4rem;
+}
+
+.gh-hero__desc {
+  color: var(--ink-dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+  max-width: 46ch;
+}
+
+.gh-hero__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.gh-hero__tech li {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--cyan);
+  background: rgba(125, 211, 232, 0.08);
+  border: 1px solid rgba(125, 211, 232, 0.2);
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+}
+
+.gh-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--lavender);
+  transition: gap 0.25s var(--ease);
+}
+
+.gh-hero:hover .gh-hero__cta {
+  gap: 0.75rem;
+}
+
+.gh-hero__pipeline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--glass-border);
+}
+
+.gh-hero__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+}
+
+.gh-hero__stage-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px rgba(125, 211, 232, 0.6);
+  flex-shrink: 0;
+}
+
+.gh-hero__stage-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+}
+
+.gh-hero__stage-line {
+  position: absolute;
+  left: 3px;
+  top: 100%;
+  width: 1px;
+  height: 0.7rem;
+  background: rgba(125, 211, 232, 0.25);
+}
+
+@media (max-width: 860px) {
+  .gh-hero {
+    grid-template-columns: 1fr;
+  }
+  .gh-hero__pipeline {
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+    padding-left: 0;
+    padding-top: 1.2rem;
+    margin-top: 0.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+  }
+  .gh-hero__stage-line {
+    display: none;
+  }
+}
+
+.gh-secondary-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gh-secondary {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  padding: 1.4rem 1.5rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.gh-secondary:hover {
+  transform: translateY(-3px);
+  border-color: rgba(125, 211, 232, 0.4);
+}
+
+.gh-secondary__top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.gh-secondary__index {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+}
+
+.gh-secondary__name {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.gh-secondary__desc {
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  margin-top: 0.6rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gh-secondary__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.gh-secondary__tech li {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--lavender);
+  background: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  padding: 0.25rem 0.55rem;
+  border-radius: 7px;
+}
+
+.gh-secondary__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  transition: gap 0.25s var(--ease), color 0.25s ease;
+}
+
+.gh-secondary:hover .gh-secondary__cta {
+  gap: 0.6rem;
+  color: var(--cyan);
+}
+
+/* university-query-system rendered alone (no sibling) spans full width */
+.gh-featured > .gh-secondary {
+  margin-top: 1rem;
+}
+
+@media (max-width: 760px) {
+  .gh-secondary-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Shared meta row (stars / forks / language / updated)
+   ============================================================ */
+.gh-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+}
+
+.gh-meta__lang {
+  color: var(--lavender);
+}
+
+.gh-meta__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gh-meta__updated {
+  margin-left: auto;
+}
+
+/* ============================================================
+   Problem Solving (DSA) + More on GitHub — flat compact rows
+   ============================================================ */
+.gh-problem-solving,
+.gh-more {
+  margin-top: 0.4rem;
+}
+
+.gh-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.gh-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1.2rem;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: inherit;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.gh-row:hover {
+  border-color: rgba(125, 211, 232, 0.35);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.gh-row__main {
+  min-width: 0;
+  flex: 1;
+}
+
+.gh-row__tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.3rem;
+}
+
+.gh-row__name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.gh-row__desc {
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+  margin-top: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+}
+
+.gh-row__forked {
+  color: var(--pink);
+}
+
+.gh-row__cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  transition: gap 0.2s var(--ease), color 0.2s ease;
+}
+
+.gh-row:hover .gh-row__cta {
+  gap: 0.5rem;
+  color: var(--cyan);
+}
+
+/* ============================================================
+   Languages + activity — flat panels
+   ============================================================ */
+.gh-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.gh-panel {
+  padding: 1.1rem 1.2rem;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+}
+
+.gh-panel__title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 0.9rem;
+}
+
+.gh-panel__text {
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+}
+
+.gh-panel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--cyan);
+  transition: gap 0.25s var(--ease);
+}
+
+.gh-panel__link:hover {
+  gap: 0.65rem;
+  color: var(--lavender);
+}
+
+.gh-lang-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.gh-lang-list li {
+  display: grid;
+  grid-template-columns: 80px 1fr 32px;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gh-lang-list__name {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-lang-list__track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--glass);
+  overflow: hidden;
+}
+
+.gh-lang-list__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--lavender), var(--cyan));
+}
+
+.gh-lang-list__pct {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .gh-skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+  .gh-hero {
+    padding: 1.5rem 1.4rem;
+  }
+  .gh-hero__name {
+    font-size: 1.5rem;
+  }
+  .gh-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

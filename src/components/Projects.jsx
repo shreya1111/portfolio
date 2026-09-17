@@ -1,5 +1,6 @@
 import { PROJECTS } from '../data'
 import ProjectCard from './ProjectCard'
+import FeaturedProject from './FeaturedProject'
 import Reveal from './Reveal'
 import './Projects.css'
 
@@ -7,7 +8,7 @@ export default function Projects() {
   return (
     <section className="section" id="projects" aria-labelledby="projects-title">
       <Reveal className="section-head">
-        <p className="eyebrow">04 · Projects</p>
+        <p className="eyebrow">05 · Projects</p>
         <h2 id="projects-title">Systems I've shipped</h2>
         <p className="section-lead">
           RAG platforms, medical AI assistants, and intelligent query systems — built end to end
@@ -15,10 +16,12 @@ export default function Projects() {
         </p>
       </Reveal>
 
+      <FeaturedProject />
+
       <div className="projects__grid">
         {PROJECTS.map((project, i) => (
           <Reveal key={project.name} delay={(i % 2) * 0.08}>
-            <ProjectCard project={project} index={i} />
+            <ProjectCard project={project} index={i + 1} />
           </Reveal>
         ))}
       </div>

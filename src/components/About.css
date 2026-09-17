@@ -1,3 +1,7 @@
+/* ============================================================
+   About section — two-column bio + current-focus card
+   ============================================================ */
+
 .about__grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -11,6 +15,10 @@
   margin-bottom: 1.2rem;
 }
 
+.about__bio p:last-of-type {
+  margin-bottom: 0;
+}
+
 .about__loc {
   display: inline-flex;
   align-items: center;
@@ -18,9 +26,10 @@
   font-family: var(--font-mono);
   font-size: 0.82rem;
   color: var(--cyan);
-  margin-top: 0.4rem;
+  margin-top: 1rem;
 }
 
+/* Focus card */
 .about__card {
   padding: 2rem 1.8rem;
   position: relative;
@@ -39,44 +48,25 @@
   pointer-events: none;
 }
 
-.about__degree {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 0.7rem 0 0.4rem;
-  line-height: 1.2;
-}
-
-.about__school {
-  color: var(--ink-dim);
-  font-size: 0.95rem;
-  margin-bottom: 1.6rem;
-}
-
-.about__stats {
+.about__focus {
   display: flex;
-  gap: 1.5rem;
-  border-top: 1px solid var(--glass-border);
-  padding-top: 1.4rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  list-style: none;
 }
 
-.about__stat-label {
-  display: block;
+.about__focus li {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--ink);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
 }
 
-.about__stat-value {
-  font-family: var(--font-mono);
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--cyan);
-}
-
+/* ── Responsive ── */
 @media (max-width: 860px) {
   .about__grid {
     grid-template-columns: 1fr;

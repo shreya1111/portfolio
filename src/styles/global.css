@@ -26,7 +26,7 @@
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
   /* Layout */
-  --maxw: 1120px;
+  --maxw: 1240px;
   --radius: 20px;
   --radius-sm: 12px;
 
@@ -136,7 +136,7 @@ ul {
 
 .section {
   position: relative;
-  padding: 6.5rem 1.5rem;
+  padding: 7rem 2.25rem;
   max-width: var(--maxw);
   margin: 0 auto;
   z-index: 1;
@@ -289,10 +289,37 @@ ul {
 /* ============================================================
    Responsive base
    ============================================================ */
+@media (max-width: 1024px) {
+  .section {
+    padding: 6rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 5rem 1.5rem;
+  }
+}
+
 @media (max-width: 640px) {
   .section {
-    padding: 4.5rem 1.2rem;
+    padding: 4.75rem 1.25rem;
   }
+}
+
+/* ============================================================
+   Screen-reader only (visually hidden, still announced)
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ============================================================

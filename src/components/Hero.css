@@ -38,7 +38,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-bottom: 2.2rem;
+  margin-bottom: 1.1rem;
+}
+
+.hero__stackline {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  margin-bottom: 1.6rem;
 }
 
 .hero__socials {

@@ -1,0 +1,108 @@
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(5, 3, 18, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 1.2rem 2rem;
+  animation: cmdk-fade 0.18s ease;
+}
+
+@keyframes cmdk-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cmdk {
+  width: min(560px, 100%);
+  background: rgba(20, 15, 46, 0.85);
+  overflow: hidden;
+  animation: cmdk-in 0.2s var(--ease);
+}
+
+@keyframes cmdk-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmdk-overlay, .cmdk { animation: none; }
+}
+
+.cmdk__input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.cmdk__icon {
+  color: var(--lavender);
+  font-size: 1.05rem;
+}
+
+.cmdk__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.cmdk__input:focus {
+  outline: none;
+}
+
+.cmdk__input::placeholder {
+  color: var(--ink-dim);
+}
+
+.cmdk__esc {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+  border: 1px solid var(--glass-border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+}
+
+.cmdk__list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.cmdk__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.cmdk__item.is-active,
+.cmdk__item:hover {
+  background: var(--glass);
+}
+
+.cmdk__hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+}
+
+.cmdk__empty {
+  padding: 1.2rem;
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}

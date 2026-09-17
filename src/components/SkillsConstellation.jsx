@@ -136,7 +136,7 @@ export default function SkillsConstellation() {
   return (
     <section className="section" id="skills" aria-labelledby="skills-title">
       <Reveal className="section-head">
-        <p className="eyebrow">03 · Skills</p>
+        <p className="eyebrow">04 · Skills</p>
         <h2 id="skills-title">A connected map of what I work with</h2>
         <p className="section-lead">
           Each cluster is a domain I build in — languages, frontend, backend, data, AI/ML, MLOps,

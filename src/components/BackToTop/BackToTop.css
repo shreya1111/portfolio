@@ -1,0 +1,37 @@
+.back-to-top {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    left: 1.1rem;
+    bottom: 1.1rem;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* Yield to any open project modal (see ProjectModal.jsx, which toggles
+   this class on <body> for as long as it's mounted). */
+body.has-open-modal .back-to-top {
+  display: none;
+}
