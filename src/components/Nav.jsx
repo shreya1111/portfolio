@@ -66,13 +66,11 @@ export default function Nav() {
         }
       }
 
-      // Only force the first section active if the user has scrolled
-      // past it — not on initial load when nothing is in view yet.
+      // Only snap to first section once it has actually crossed the trigger
+      // line — not on initial load while the user is still in the hero.
       if (!current) {
         const firstRect = sections[0].getBoundingClientRect()
-        if (firstRect.top < triggerLine) {
-          current = sections[0].id
-        }
+        if (firstRect.top < triggerLine) current = sections[0].id
       }
 
       // Near the bottom of the page, the last section may never fully
