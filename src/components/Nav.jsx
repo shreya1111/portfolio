@@ -30,17 +30,23 @@ export default function Nav() {
   // That's always the most specific section actually on screen at the
   // trigger line — correct whether or not sections are nested.
   useEffect(() => {
-    let sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean)
-    if (sections.length === 0) return
-    // Sort by actual document position for the above/below fallback pass.
-    sections = sections.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
-
     let ticking = false
 
     const computeActive = () => {
       ticking = false
       const navHeight = navRef.current ? navRef.current.offsetHeight : 0
       const triggerLine = navHeight + 24 // just under the fixed navbar
+
+      // Re-query sections on every frame so lazy-loaded sections that
+      // mounted after this effect initialised are always included.
+      const sections = SECTION_IDS
+        .map((id) => document.getElementById(id))
+        .filter(Boolean)
+        // Sort by document position (top of bounding box at this moment,
+        // which equals document order for non-overlapping sections).
+        .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+
+      if (sections.length === 0) return
 
       let best = null
       for (const el of sections) {
