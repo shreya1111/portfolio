@@ -70,36 +70,48 @@ export const SNAPSHOT = [
     index: '01',
     label: 'AI / ML',
     detail: 'Machine Learning · Deep Learning · NLP · Generative AI',
+    accent: 'cyan',       // drives per-card color token
+    decoration: 'neural', // drives SVG decoration variant
   },
   {
     id: 'llm',
     index: '02',
     label: 'LLM Engineering',
     detail: 'RAG · LangChain · LangGraph · Prompt Engineering',
+    accent: 'lavender',
+    decoration: 'nodes',
   },
   {
     id: 'agentic',
     index: '03',
     label: 'Agentic AI',
     detail: 'Agentic AI Development · Automation Workflows',
+    accent: 'pink',
+    decoration: 'flow',
   },
   {
     id: 'backend',
     index: '04',
     label: 'Backend',
     detail: 'Python · FastAPI · Django · REST APIs',
+    accent: 'cyan',
+    decoration: 'grid',
   },
   {
     id: 'data',
     index: '05',
     label: 'Data & Infrastructure',
     detail: 'SQL · PostgreSQL · Redis · ChromaDB · Docker',
+    accent: 'lavender',
+    decoration: 'stack',
   },
   {
     id: 'oss',
     index: '06',
     label: 'Open Source',
     detail: 'GSSoC 2026 · Git workflows · Code review',
+    accent: 'pink',
+    decoration: 'branch',
   },
 ]
 

@@ -1,6 +1,14 @@
 /* ============================================================
-   Snapshot — capability card strip
+   Snapshot — premium capability cards
+   ============================================================
+
+   Stacking order inside each card (bottom → top):
+     1. snap-card__deco     SVG decoration, very low opacity
+     2. snap-card__spotlight  pointer-reactive radial glow
+     3. snap-card__body     all readable content
    ============================================================ */
+
+/* ── Section container ────────────────────────────────────── */
 
 .snapshot {
   position: relative;
@@ -10,101 +18,217 @@
   padding: 0 1.5rem 4rem;
 }
 
-/* ── Grid ─────────────────────────────────────────────────── */
+/* ── 3-column grid ────────────────────────────────────────── */
 
 .snapshot__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 1.35rem;
   align-items: stretch;
 }
 
-/* ── Card shell ───────────────────────────────────────────── */
+/* ── Card outer shell (the Reveal div) ───────────────────── */
 
 /*
- * The .reveal wrapper (from Reveal.jsx) becomes the grid item.
- * We style .snap-card as the inner visual surface, keeping
- * .reveal purely for animation concerns.
+ * .snap-card is placed on the Reveal wrapper.
+ * All visual styling lives on .snap-card__inner so hover/pointer
+ * effects are self-contained without fighting the reveal animation.
  */
 .snap-card {
-  /* Layered background: very subtle violet tint over the base glass,
-     giving each card just a touch more presence than the page BG. */
-  background:
-    linear-gradient(
-      145deg,
-      rgba(36, 26, 78, 0.72) 0%,
-      rgba(13, 10, 36, 0.65) 100%
-    );
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  /* Pass accent + cursor coords to the inner element via inheritance */
+  --card-accent: var(--cyan);   /* overridden per-card inline */
+  --mx: 0.5;
+  --my: 0.5;
+}
+
+/* ── Inner visual surface ─────────────────────────────────── */
+
+.snap-card__inner {
+  position: relative;
+  overflow: hidden;
   border-radius: 20px;
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  height: 100%;
 
-  /* Subtle depth: shadow is dark so it integrates with the page tone */
+  /*
+   * Layered background:
+   *   layer 1 — pointer-reactive radial highlight (set via JS custom props)
+   *   layer 2 — subtle top-corner glow using the card accent
+   *   layer 3 — main dark glass gradient
+   */
+  background:
+    radial-gradient(
+      circle at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+      color-mix(in srgb, var(--card-accent) 9%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 15% 0%,
+      color-mix(in srgb, var(--card-accent) 7%, transparent) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      148deg,
+      rgba(28, 20, 62, 0.88) 0%,
+      rgba(14, 10, 36, 0.82) 100%
+    );
+
+  /* Refined border: slightly visible but not loud */
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  /* Depth: inset top highlight + ambient shadow + accent micro-glow */
   box-shadow:
-    0 2px 0 rgba(255, 255, 255, 0.04) inset,   /* top inner highlight */
-    0 12px 32px rgba(5, 3, 20, 0.38),           /* ambient shadow      */
-    0 1px 0 rgba(167, 139, 250, 0.08);          /* bottom micro-glow   */
+    0 1px 0  rgba(255, 255, 255, 0.06) inset,
+    0 14px 36px rgba(5, 3, 20, 0.45),
+    0 1px 0  color-mix(in srgb, var(--card-accent) 10%, transparent);
 
-  /* Consistent internal zones via flex column */
+  /* Glass blur */
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+
   display: flex;
   flex-direction: column;
-  padding: 1.75rem 1.75rem 1.6rem;
 
-  /* Smooth transitions for hover */
   transition:
-    transform 0.25s var(--ease),
-    border-color 0.25s var(--ease),
-    background 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
-
-  /* Ensure cards sit above the constellation canvas */
-  position: relative;
-  z-index: 1;
+    transform     0.30s var(--ease),
+    border-color  0.30s var(--ease),
+    box-shadow    0.30s var(--ease),
+    background    0.30s var(--ease);
 }
 
-/* ── Hover ────────────────────────────────────────────────── */
+/* ── Hover state ──────────────────────────────────────────── */
 
-.snap-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(167, 139, 250, 0.30);
-  background:
-    linear-gradient(
-      145deg,
-      rgba(42, 30, 90, 0.80) 0%,
-      rgba(18, 14, 46, 0.72) 100%
-    );
+.snap-card__inner:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--card-accent) 30%, transparent);
   box-shadow:
-    0 2px 0 rgba(255, 255, 255, 0.06) inset,
-    0 18px 40px rgba(5, 3, 20, 0.45),
-    0 0 0 1px rgba(167, 139, 250, 0.10),
-    0 4px 16px rgba(167, 139, 250, 0.08);
+    0 1px 0  rgba(255, 255, 255, 0.08) inset,
+    0 22px 48px rgba(5, 3, 20, 0.55),
+    0 0 0 1px color-mix(in srgb, var(--card-accent) 14%, transparent),
+    0 6px 24px color-mix(in srgb, var(--card-accent) 10%, transparent);
+  background:
+    radial-gradient(
+      circle at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+      color-mix(in srgb, var(--card-accent) 14%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 15% 0%,
+      color-mix(in srgb, var(--card-accent) 11%, transparent) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      148deg,
+      rgba(34, 24, 74, 0.94) 0%,
+      rgba(18, 13, 44, 0.88) 100%
+    );
 }
 
-/* Subtle top-edge cyan accent that brightens on hover */
-.snap-card::before {
+/* Subtle top-edge accent line that appears on hover */
+.snap-card__inner::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 1.75rem;
-  right: 1.75rem;
+  left: 1.8rem;
+  right: 1.8rem;
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(125, 211, 232, 0.22),
+    color-mix(in srgb, var(--card-accent) 55%, transparent),
     transparent
   );
-  border-radius: 0 0 1px 1px;
-  transition: opacity 0.25s var(--ease);
   opacity: 0;
+  transition: opacity 0.30s var(--ease);
+  pointer-events: none;
 }
 
-.snap-card:hover::before {
+.snap-card__inner:hover::before {
   opacity: 1;
 }
 
-/* ── Header row: index + glowing dot ─────────────────────── */
+/* ── Pointer spotlight ─────────────────────────────────────
+ * This layer is painted on top of the background gradients
+ * but below the SVG decoration and content. The radial gradient
+ * is driven by --mx / --my set via onMouseMove in JS.
+ * ──────────────────────────────────────────────────────────── */
+
+.snap-card__spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(
+    circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+    color-mix(in srgb, var(--card-accent) 18%, transparent) 0%,
+    transparent 50%
+  );
+  transition: opacity 0.25s ease;
+}
+
+.snap-card__inner:hover .snap-card__spotlight {
+  opacity: 1;
+}
+
+/* ── SVG decoration ────────────────────────────────────────
+ * Absolutely positioned behind all content.
+ * Uses currentColor so the accent color flows through naturally.
+ * ──────────────────────────────────────────────────────────── */
+
+.snap-card__deco {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.2rem;
+  width: 72px;
+  height: 52px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.10;
+  transition: opacity 0.30s var(--ease);
+}
+
+.snap-card__inner:hover .snap-card__deco {
+  opacity: 0.22;
+}
+
+/* SVG inherits accent color for both stroke and fill */
+.snap-deco {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--card-accent);
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 1;
+}
+
+.snap-deco circle,
+.snap-deco ellipse {
+  fill: currentColor;
+  stroke: none;
+}
+
+.snap-deco line,
+.snap-deco rect[stroke] {
+  fill: none;
+  stroke: currentColor;
+}
+
+/* ── Card body ─────────────────────────────────────────────
+ * z-index: 2 places it above spotlight + decoration.
+ * ──────────────────────────────────────────────────────────── */
+
+.snap-card__body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.75rem 1.75rem 1.65rem;
+}
+
+/* ── Header row: index + accent dot ──────────────────────── */
 
 .snap-card__header {
   display: flex;
@@ -113,64 +237,68 @@
   margin-bottom: 1rem;
 }
 
+/* Decorative index — intentionally dim, never competes with title */
 .snap-card__index {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  color: rgba(167, 139, 250, 0.35);
+  letter-spacing: 0.10em;
+  color: color-mix(in srgb, var(--card-accent) 45%, transparent);
   line-height: 1;
-  /* Decorative only — intentionally faint */
   user-select: none;
+  transition: color 0.25s ease;
 }
 
+.snap-card__inner:hover .snap-card__index {
+  color: color-mix(in srgb, var(--card-accent) 80%, transparent);
+}
+
+/* Glowing dot — accent-colored */
 .snap-card__dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--cyan);
-  opacity: 0.55;
-  box-shadow: 0 0 6px rgba(125, 211, 232, 0.50);
+  background: var(--card-accent);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--card-accent) 60%, transparent);
   flex-shrink: 0;
-  transition: opacity 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
-.snap-card:hover .snap-card__dot {
-  opacity: 0.85;
-  box-shadow: 0 0 10px rgba(125, 211, 232, 0.70);
+.snap-card__inner:hover .snap-card__dot {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--card-accent) 90%, transparent);
+  transform: scale(1.25);
 }
 
-/* ── Title ────────────────────────────────────────────────── */
+/* ── Category title ───────────────────────────────────────── */
 
 .snap-card__title {
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--ink);
-  line-height: 1.2;
-  /* Title holds its own — slightly brighter than the rest of the card */
+  line-height: 1.15;
+  margin: 0;
 }
 
 /* ── Accent rule ──────────────────────────────────────────── */
 
 .snap-card__rule {
-  width: 2rem;
+  width: 1.8rem;
   height: 1.5px;
-  margin: 0.85rem 0 1rem;
+  margin: 0.9rem 0 1rem;
   background: linear-gradient(
     90deg,
-    rgba(125, 211, 232, 0.65),
-    rgba(167, 139, 250, 0.35)
+    color-mix(in srgb, var(--card-accent) 75%, transparent),
+    color-mix(in srgb, var(--card-accent) 20%, transparent)
   );
   border-radius: 2px;
   flex-shrink: 0;
-  transition: width 0.25s var(--ease), opacity 0.25s var(--ease);
+  transition: width 0.30s var(--ease);
 }
 
-.snap-card:hover .snap-card__rule {
-  width: 2.8rem;
-  opacity: 1;
+.snap-card__inner:hover .snap-card__rule {
+  width: 3rem;
 }
 
 /* ── Skill item list ──────────────────────────────────────── */
@@ -179,22 +307,49 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  /* Push list to fill remaining vertical space so cards align at bottom */
+  gap: 0.42rem;
   flex: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .snap-card__item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--ink-dim);
-  line-height: 1.5;
-  /* Each item on its own line: clean, scannable */
+  line-height: 1.4;
+  transition:
+    transform 0.18s var(--ease),
+    color     0.18s ease;
 }
 
-/* ── Responsive grid ──────────────────────────────────────── */
+/* Bullet micro-indicator */
+.snap-card__item-bullet {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card-accent) 50%, transparent);
+  transition: background 0.18s ease, transform 0.18s var(--ease);
+}
+
+/* Per-item hover: only fires when cursor is over the list area */
+.snap-card__inner:hover .snap-card__item:hover {
+  transform: translateX(4px);
+  color: var(--ink);
+}
+
+.snap-card__inner:hover .snap-card__item:hover .snap-card__item-bullet {
+  background: var(--card-accent);
+  transform: scale(1.4);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
 
 /* Tablet: 2 columns */
 @media (max-width: 1099px) and (min-width: 700px) {
@@ -213,21 +368,36 @@
     grid-template-columns: 1fr;
     gap: 0.9rem;
   }
-  .snap-card {
+  .snap-card__body {
     padding: 1.5rem 1.5rem 1.4rem;
+  }
+  /* Disable pointer spotlight on mobile (no hover cursor) */
+  .snap-card__spotlight {
+    display: none;
   }
 }
 
 /* ── Reduced motion ───────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .snap-card,
+  .snap-card__inner,
+  .snap-card__inner::before,
   .snap-card__dot,
   .snap-card__rule,
-  .snap-card::before {
+  .snap-card__item,
+  .snap-card__item-bullet,
+  .snap-card__index,
+  .snap-card__spotlight,
+  .snap-card__deco {
     transition: none;
   }
-  .snap-card:hover {
+  .snap-card__inner:hover {
     transform: none;
+  }
+  .snap-card__inner:hover .snap-card__item:hover {
+    transform: none;
+  }
+  .snap-card__spotlight {
+    display: none;
   }
 }
