@@ -198,9 +198,9 @@ function buildAnswer(intent, query) {
     }
 
     case 'current-internship': {
-      const current = EXPERIENCE.find((job) => job.status === 'current' && job.org.toLowerCase().includes('flyrank'))
-      if (!current) return buildAnswer({ id: 'experience' })
-      return `Her current internship: ${current.role} at ${current.org} (${current.period}), ${current.location}. ${current.points.join(' ')}`
+      const completed = EXPERIENCE.find((job) => job.org.toLowerCase().includes('flyrank'))
+      if (!completed) return buildAnswer({ id: 'experience' })
+      return `Her most recent internship: ${completed.role} at ${completed.org} (${completed.period}), ${completed.location}. Completed — Credential ID: FR-D11-A6201-B55C0. ${completed.points.join(' ')}`
     }
 
     case 'internships-completed': {

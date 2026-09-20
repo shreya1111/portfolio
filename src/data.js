@@ -67,31 +67,37 @@ export const EDUCATION = [
 export const SNAPSHOT = [
   {
     id: 'aiml',
+    index: '01',
     label: 'AI / ML',
     detail: 'Machine Learning · Deep Learning · NLP · Generative AI',
   },
   {
     id: 'llm',
+    index: '02',
     label: 'LLM Engineering',
     detail: 'RAG · LangChain · LangGraph · Prompt Engineering',
   },
   {
     id: 'agentic',
+    index: '03',
     label: 'Agentic AI',
     detail: 'Agentic AI Development · Automation Workflows',
   },
   {
     id: 'backend',
+    index: '04',
     label: 'Backend',
     detail: 'Python · FastAPI · Django · REST APIs',
   },
   {
     id: 'data',
+    index: '05',
     label: 'Data & Infrastructure',
     detail: 'SQL · PostgreSQL · Redis · ChromaDB · Docker',
   },
   {
     id: 'oss',
+    index: '06',
     label: 'Open Source',
     detail: 'GSSoC 2026 · Git workflows · Code review',
   },
@@ -102,21 +108,21 @@ export const SNAPSHOT = [
 export const EXPERIENCE = [
   {
     id: 'flyrank',
-    status: 'current',
-    badge: 'Current',
-    role: 'Machine Learning Engineering Intern',
-    org: 'FlyRank AI',
+    status: 'past',
+    badge: 'Completed',
+    role: 'Machine Learning Intern',
+    org: 'FlyRank.ai',
     location: 'Remote',
-    period: 'July 1 – August 31, 2026',
+    period: 'Jul 1 – Sep 16, 2026',
     link: {
-      label: 'Internship Confirmation Letter',
-      url: 'https://drive.google.com/file/d/1wfcbpxd76wjqkyKQZVxv_2DlP63AOv7o/view?usp=sharing',
+      label: 'Verify Credential · FR-D11-A6201-B55C0',
+      url: 'https://internship.flyrank.ai/verify/FR-D11-A6201-B55C0?first_name=Shreya',
     },
     points: [
-      'Working as a Machine Learning Engineering Intern (remote) at FlyRank AI, building intelligence layers on real-world data with a measurable quality bar and clear business impact.',
-      'Handling real-world data wrangling challenges — join constraints, anonymized rows, nested JSON structures, and aggregation strategy.',
-      'Working with embeddings and clustering to group queries and pages by meaning, mapping clusters to content coverage gaps and cannibalization.',
-      'Building intent and opportunity models, connecting model output to specific, actionable recommendations.',
+      'Completed a Machine Learning Internship at FlyRank.ai, building intelligence layers on real-world data with a measurable quality bar and clear business impact.',
+      'Handled real-world data wrangling challenges — join constraints, anonymized rows, nested JSON structures, and aggregation strategy.',
+      'Worked with embeddings and clustering to group queries and pages by meaning, mapping clusters to content coverage gaps and cannibalization.',
+      'Built intent and opportunity models, connecting model output to specific, actionable recommendations.',
     ],
   },
   {
@@ -573,6 +579,32 @@ export const CERTIFICATIONS = [
     description:
       'Completed a 2-week Summer Internship Training Program focused on Full Stack Development using Python at SRDT Pvt. Ltd.',
   },
+  {
+    id: 'fcc-python',
+    name: 'Python',
+    issuer: 'freeCodeCamp',
+    issuedDate: 'August 2026',
+    credentialId: null,
+    credentialUrl:
+      'https://www.freecodecamp.org/certification/fcc-4d7bb53a-e753-43b4-bc6e-169361b7a3d1/python-v9',
+    skills: ['Python'],
+    courseCertificates: [],
+    category: 'backend',
+    featured: false,
+  },
+  {
+    id: 'fcc-responsive-web-design',
+    name: 'Responsive Web Design',
+    issuer: 'freeCodeCamp',
+    issuedDate: 'August 2026',
+    credentialId: null,
+    credentialUrl:
+      'https://www.freecodecamp.org/certification/fcc-4d7bb53a-e753-43b4-bc6e-169361b7a3d1/responsive-web-design-v9',
+    skills: ['HTML', 'CSS', 'Responsive Design'],
+    courseCertificates: [],
+    category: 'web',
+    featured: false,
+  },
 ]
 
 // Explicit display-priority order for the homepage's 6 featured
@@ -594,6 +626,7 @@ export const CERTIFICATION_CATEGORIES = [
   { id: 'nlp', label: 'NLP' },
   { id: 'deep-learning', label: 'Deep Learning' },
   { id: 'backend', label: 'Backend' },
+  { id: 'web', label: 'Web' },
   { id: 'cloud', label: 'Cloud' },
   { id: 'data', label: 'Data' },
 ]
@@ -605,6 +638,7 @@ export const CERTIFICATION_CATEGORY_COLOR = {
   nlp: 'var(--cyan)',
   'deep-learning': 'var(--lavender)',
   backend: 'var(--pink)',
+  web: 'var(--cyan)',
   cloud: 'var(--cyan)',
   data: 'var(--lavender)',
 }

@@ -1,53 +1,233 @@
+/* ============================================================
+   Snapshot — capability card strip
+   ============================================================ */
+
 .snapshot {
   position: relative;
   z-index: 1;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 1.5rem 2rem;
+  padding: 0 1.5rem 4rem;
 }
+
+/* ── Grid ─────────────────────────────────────────────────── */
 
 .snapshot__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
 }
 
-.snapshot__card {
-  padding: 1.3rem 1.4rem;
-  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+/* ── Card shell ───────────────────────────────────────────── */
+
+/*
+ * The .reveal wrapper (from Reveal.jsx) becomes the grid item.
+ * We style .snap-card as the inner visual surface, keeping
+ * .reveal purely for animation concerns.
+ */
+.snap-card {
+  /* Layered background: very subtle violet tint over the base glass,
+     giving each card just a touch more presence than the page BG. */
+  background:
+    linear-gradient(
+      145deg,
+      rgba(36, 26, 78, 0.72) 0%,
+      rgba(13, 10, 36, 0.65) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 20px;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  /* Subtle depth: shadow is dark so it integrates with the page tone */
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.04) inset,   /* top inner highlight */
+    0 12px 32px rgba(5, 3, 20, 0.38),           /* ambient shadow      */
+    0 1px 0 rgba(167, 139, 250, 0.08);          /* bottom micro-glow   */
+
+  /* Consistent internal zones via flex column */
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.75rem 1.6rem;
+
+  /* Smooth transitions for hover */
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+
+  /* Ensure cards sit above the constellation canvas */
+  position: relative;
+  z-index: 1;
 }
 
-.snapshot__card:hover {
+/* ── Hover ────────────────────────────────────────────────── */
+
+.snap-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(167, 139, 250, 0.4);
+  border-color: rgba(167, 139, 250, 0.30);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(42, 30, 90, 0.80) 0%,
+      rgba(18, 14, 46, 0.72) 100%
+    );
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+    0 18px 40px rgba(5, 3, 20, 0.45),
+    0 0 0 1px rgba(167, 139, 250, 0.10),
+    0 4px 16px rgba(167, 139, 250, 0.08);
 }
 
-.snapshot__label {
+/* Subtle top-edge cyan accent that brightens on hover */
+.snap-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.75rem;
+  right: 1.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 211, 232, 0.22),
+    transparent
+  );
+  border-radius: 0 0 1px 1px;
+  transition: opacity 0.25s var(--ease);
+  opacity: 0;
+}
+
+.snap-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Header row: index + glowing dot ─────────────────────── */
+
+.snap-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.snap-card__index {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--cyan);
-  margin-bottom: 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(167, 139, 250, 0.35);
+  line-height: 1;
+  /* Decorative only — intentionally faint */
+  user-select: none;
 }
 
-.snapshot__detail {
-  font-size: 0.88rem;
+.snap-card__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  opacity: 0.55;
+  box-shadow: 0 0 6px rgba(125, 211, 232, 0.50);
+  flex-shrink: 0;
+  transition: opacity 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.snap-card:hover .snap-card__dot {
+  opacity: 0.85;
+  box-shadow: 0 0 10px rgba(125, 211, 232, 0.70);
+}
+
+/* ── Title ────────────────────────────────────────────────── */
+
+.snap-card__title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.2;
+  /* Title holds its own — slightly brighter than the rest of the card */
+}
+
+/* ── Accent rule ──────────────────────────────────────────── */
+
+.snap-card__rule {
+  width: 2rem;
+  height: 1.5px;
+  margin: 0.85rem 0 1rem;
+  background: linear-gradient(
+    90deg,
+    rgba(125, 211, 232, 0.65),
+    rgba(167, 139, 250, 0.35)
+  );
+  border-radius: 2px;
+  flex-shrink: 0;
+  transition: width 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+
+.snap-card:hover .snap-card__rule {
+  width: 2.8rem;
+  opacity: 1;
+}
+
+/* ── Skill item list ──────────────────────────────────────── */
+
+.snap-card__items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  /* Push list to fill remaining vertical space so cards align at bottom */
+  flex: 1;
+}
+
+.snap-card__item {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--ink-dim);
   line-height: 1.5;
+  /* Each item on its own line: clean, scannable */
 }
 
-@media (max-width: 900px) {
+/* ── Responsive grid ──────────────────────────────────────── */
+
+/* Tablet: 2 columns */
+@media (max-width: 1099px) and (min-width: 700px) {
   .snapshot__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
   }
 }
 
-@media (max-width: 560px) {
+/* Mobile: 1 column */
+@media (max-width: 699px) {
+  .snapshot {
+    padding: 0 1.25rem 3rem;
+  }
   .snapshot__grid {
     grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
-  .snapshot {
-    padding: 0 1.2rem 1.5rem;
+  .snap-card {
+    padding: 1.5rem 1.5rem 1.4rem;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .snap-card,
+  .snap-card__dot,
+  .snap-card__rule,
+  .snap-card::before {
+    transition: none;
+  }
+  .snap-card:hover {
+    transform: none;
   }
 }
